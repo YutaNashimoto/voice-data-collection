@@ -1,5 +1,5 @@
-import { APP_VERSION, GOOGLE_FORM_URL, PARTICIPANT_PATTERN, PARTICIPANT_HINT, CONSENT_TEXT, INTRO_TEXT, CONSENT_REQUIRED, CONSENT_VERSION, normalizeParticipantCode, participantFormUrl, FACE, LIMITS, BLOCKS, SESSION_PRESET, TOTALS_TEXT } from '../config.js';
-import { Database, sessionKey, nextUnrecorded, saveTake, removeTakes, changeParticipant } from './store.js';
+import { APP_VERSION, GOOGLE_FORM_URL, PARTICIPANT_NAME_HINT, CONSENT_TEXT, INTRO_TEXT, CONSENT_REQUIRED, CONSENT_VERSION, normalizeParticipantName, createParticipantCode, participantFormUrl, FACE, LIMITS, BLOCKS, SESSION_PRESET, TOTALS_TEXT } from '../config.js';
+import { Database, sessionKey, nextUnrecorded, saveTake, removeTakes, changeParticipantName } from './store.js';
 import { loadItems } from './items.js';
 import { openCamera, chooseMime, cameraSettings, sanitizeCameraLabel, attachVideo, FaceCheck, measureFrames } from './camera.js';
 import { prepareExport, saveExport, downloadLink } from './export.js';
@@ -97,24 +97,25 @@ function showConsent() {
     if (!$('#consent-check').checked) return;
     consentAt = new Date().toISOString();
     if (profile?.participant) {
-      profile.consent_at = consentAt;
-      profile.consent_version = CONSENT_VERSION;
-      await db.put('settings', 'profile', profile);
-      if (profile.tutorial_completed) await showMenu();
-      else await showCamera();
+      const updated = { ...profile, consent_at: consentAt, consent_version: CONSENT_VERSION };
+      await db.put('settings', 'profile', updated);
+      profile = updated;
+      await resumeParticipant();
     } else showInfo();
   });
 }
 
 function showInfo() {
-  setScreen('info', `<p class="step">準備 1 / 2</p><h1>参加者番号を教えてください</h1><p>氏名は入力しません。年代などは答えなくてもかまいません。</p><form id="info-form" novalidate><div class="fields"><label class="field code">参加者番号（必須）<input id="participant-code" required maxlength="64" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="P001" aria-describedby="code-hint"><span class="small" id="code-hint">${escapeHtml(PARTICIPANT_HINT)}</span></label><label class="field">年代（任意）<select id="age-band"><option value="">回答しない</option><option value="u19">10代以下</option><option value="20s">20代</option><option value="30s">30代</option><option value="40s">40代</option><option value="50s">50代</option><option value="60plus">60代以上</option></select></label><label class="field">性別（任意）<select id="sex"><option value="">回答しない</option><option value="female">女性</option><option value="male">男性</option><option value="other">その他</option></select></label><label class="field">眼鏡（任意）<select id="glasses"><option value="">回答しない</option><option value="yes">あり</option><option value="no">なし</option></select></label></div><div class="actions"><button type="submit" id="info-next" class="primary">カメラの確認へ</button></div></form>`);
+  setScreen('info', `<p class="step">準備 1 / 2</p><h1>お名前を教えてください</h1><p>お名前は録った動画と一緒に保存します。年代などは答えなくてもかまいません。</p><form id="info-form" novalidate><div class="fields"><label class="field code">お名前（必須）<input id="participant-name" required maxlength="160" autocomplete="name" spellcheck="false" aria-describedby="name-hint"><span class="small" id="name-hint">${escapeHtml(PARTICIPANT_NAME_HINT)}</span></label><label class="field">年代（任意）<select id="age-band"><option value="">回答しない</option><option value="u19">10代以下</option><option value="20s">20代</option><option value="30s">30代</option><option value="40s">40代</option><option value="50s">50代</option><option value="60plus">60代以上</option></select></label><label class="field">性別（任意）<select id="sex"><option value="">回答しない</option><option value="female">女性</option><option value="male">男性</option><option value="other">その他</option></select></label><label class="field">眼鏡（任意）<select id="glasses"><option value="">回答しない</option><option value="yes">あり</option><option value="no">なし</option></select></label></div><div class="actions"><button type="submit" id="info-next" class="primary">カメラの確認へ</button></div></form>`);
   on('#info-form', async () => {
-    const code = normalizeParticipantCode($('#participant-code').value);
-    $('#participant-code').value = code;
-    if (!new RegExp(PARTICIPANT_PATTERN).test(code) || !/^[A-Za-z0-9_-]+$/.test(code)) { notice(PARTICIPANT_HINT); return; }
-    profile = { participant: { code, age_band: $('#age-band').value, sex: $('#sex').value, glasses: $('#glasses').value }, consent_at: CONSENT_REQUIRED ? consentAt : null, consent_version: CONSENT_REQUIRED ? CONSENT_VERSION : null, tutorial_completed: false, storage_persisted: false };
-    await db.put('settings', 'profile', profile);
-    $('#participant-label').textContent = `参加者 ${code}`;
+    let name;
+    try { name = normalizeParticipantName($('#participant-name').value); }
+    catch (error) { notice(error.message); return; }
+    $('#participant-name').value = name;
+    const updated = { participant: { code: createParticipantCode(), name, age_band: $('#age-band').value, sex: $('#sex').value, glasses: $('#glasses').value }, consent_at: CONSENT_REQUIRED ? consentAt : null, consent_version: CONSENT_REQUIRED ? CONSENT_VERSION : null, tutorial_completed: false, storage_persisted: false };
+    await db.put('settings', 'profile', updated);
+    profile = updated;
+    $('#participant-label').textContent = `お名前：${name}`;
     await showCamera();
   }, 'submit');
 }
@@ -232,10 +233,10 @@ async function showMenu() {
   pendingTake = null;
   prepared = null;
   const sessions = await Promise.all(BLOCKS.map(block => db.get('sessions', sessionKey(profile.participant.code, block.id))));
-  setScreen('menu', `<p class="step">参加者 ${escapeHtml(profile.participant.code)}</p><h1>どのブロックからでも始められます</h1><p>全部で${TOTALS_TEXT}。ひと区切りずつ録って、保存して、送ります。</p><div class="blocks">${BLOCKS.map((block, position) => {
+  setScreen('menu', `<p class="step">お名前：${escapeHtml(profile.participant.name)}</p><h1>どのブロックからでも始められます</h1><p>全部で${TOTALS_TEXT}。ひと区切りずつ録って、保存して、送ります。</p><div class="blocks">${BLOCKS.map((block, position) => {
     const saved = sessions[position], count = Object.keys(saved?.saved || {}).length;
     return `<section class="block"><div><div class="block-title"><b>${block.id}</b><h2>${block.title}</h2></div><p>${block.detail} / ${block.count}問 / 約${block.minutes}分</p><progress value="${count}" max="${block.count}" aria-label="${block.id}の保存済み項目"></progress><p>${count} / ${block.count}問 保存済み</p></div><div class="block-controls"><button class="primary" data-block="${block.id}">${count === block.count ? 'ZIP保存・送信へ' : count ? '続きから録る' : 'このブロックを録る'}</button><label class="check"><input type="checkbox" data-sent="${block.id}" ${saved?.sent ? 'checked' : ''} ${saved?.zip_saved_at ? '' : 'disabled'}>送信済み</label>${count === block.count ? `<button data-redo-last="${block.id}">最後の1問をやり直す</button>` : count ? `<button data-partial="${block.id}">ここまでの分をZIPにする</button>` : ''}${count ? `<button class="small" data-reset="${block.id}">このブロックを最初から録り直す</button>` : ''}</div></section>`;
-  }).join('')}</div><div class="actions"><button id="change-participant">参加者番号を直す</button><button id="tutorial-again">練習をもう一度</button><button id="camera-again">カメラを確認</button><button id="clear-data" class="danger">この端末のデータをすべて消す</button></div><p class="small">同じ端末・同じブラウザで続きを録れます。保存済みでも、ブラウザのデータ消去や空き容量不足で消えることがあります。終わったブロックは早めにZIPで保存してください。</p>`);
+  }).join('')}</div><div class="actions"><button id="change-name">お名前を直す</button><button id="tutorial-again">練習をもう一度</button><button id="camera-again">カメラを確認</button><button id="clear-data" class="danger">この端末のデータをすべて消す</button></div><p class="small">同じ端末・同じブラウザで続きを録れます。保存済みでも、ブラウザのデータ消去や空き容量不足で消えることがあります。終わったブロックは早めにZIPで保存してください。</p>`);
   for (const button of screen.querySelectorAll('[data-block]')) on(`[data-block="${button.dataset.block}"]`, () => openBlock(button.dataset.block));
   for (const checkbox of screen.querySelectorAll('[data-sent]')) checkbox.addEventListener('change', () => { void run(async () => {
     const block = checkbox.dataset.sent;
@@ -253,7 +254,7 @@ async function showMenu() {
     }
     await showMenu();
   });
-  on('#change-participant', showChangeParticipant);
+  on('#change-name', () => showChangeName());
   for (const button of screen.querySelectorAll('[data-partial]')) on(`[data-partial="${button.dataset.partial}"]`, async () => {
     items = await loadItems(button.dataset.partial);
     session = await db.get('sessions', sessionKey(profile.participant.code, button.dataset.partial));
@@ -263,7 +264,7 @@ async function showMenu() {
     await openBlock(button.dataset.redoLast, true);
   });
   on('#clear-data', async () => {
-    if (!confirm('このブラウザに保存した全参加者の動画・番号・進捗をすべて消します。元に戻せません。よろしいですか？')) return;
+    if (!confirm('このブラウザに保存した全参加者の動画・名前・進捗をすべて消します。元に戻せません。よろしいですか？')) return;
     await db.clear();
     for (const track of stream?.getTracks() || []) track.stop();
     stream = null; profile = null; session = null;
@@ -274,17 +275,24 @@ async function showMenu() {
   on('#camera-again', () => showCamera());
 }
 
-function showChangeParticipant() {
-  setScreen('change-participant', `<h1>参加者番号を直す</h1><p>保存した動画と進み具合を、新しい番号にまとめて移します。保存済みのZIPは、新しい番号でもう一度保存してください。</p><p>すでにGoogleフォームで送ったブロックがあれば、新しい番号でZIPを保存して送り直し、番号を直したことを実験者に伝えてください。</p><form id="change-code-form" novalidate><label class="field">参加者番号<input id="participant-code" value="${escapeHtml(profile.participant.code)}" maxlength="64" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="code-hint"><span class="small" id="code-hint">${escapeHtml(PARTICIPANT_HINT)}</span></label><div class="actions"><button id="change-code-save" type="submit" class="primary">この番号に直す</button><button id="cancel-change" type="button">戻る</button></div></form>`);
-  on('#cancel-change', showMenu);
-  on('#change-code-form', async () => {
-    const code = normalizeParticipantCode($('#participant-code').value);
-    $('#participant-code').value = code;
-    if (!new RegExp(PARTICIPANT_PATTERN).test(code) || !/^[A-Za-z0-9_-]{1,64}$/.test(code)) { notice(PARTICIPANT_HINT); return; }
-    if (code !== profile.participant.code) profile = await changeParticipant(db, profile, code);
+async function resumeParticipant() {
+  if (!profile.participant.name) { showChangeName(true); return; }
+  $('#participant-label').textContent = `お名前：${profile.participant.name}`;
+  if (profile.tutorial_completed) await showMenu();
+  else await showCamera();
+}
+
+function showChangeName(addingName = !profile.participant.name) {
+  setScreen('change-name', `<h1>${addingName ? 'お名前を追加してください' : 'お名前を直す'}</h1><p>${addingName ? '保存済みの動画と進み具合を残したまま、お名前を追加します。' : '録った方のお名前の訂正です。別の方への切り替えには使えません。'}</p><p>お名前は動画と一緒にZIPに含まれます。保存済みのZIPは、お名前を保存した後でもう一度保存してください。</p><p>すでにGoogleフォームで送ったブロックがあれば、ZIPを保存して送り直し、お名前を直したことを実験者に伝えてください。</p><form id="change-name-form" novalidate><label class="field">お名前（必須）<input id="participant-name" value="${escapeHtml(profile.participant.name || '')}" required maxlength="160" autocomplete="name" spellcheck="false" aria-describedby="name-hint"><span class="small" id="name-hint">${escapeHtml(PARTICIPANT_NAME_HINT)}</span></label><div class="actions"><button id="change-name-save" type="submit" class="primary">${addingName ? 'お名前を保存して続ける' : 'このお名前に直す'}</button>${addingName ? '' : '<button id="cancel-change" type="button">戻る</button>'}</div></form>`);
+  if (!addingName) on('#cancel-change', showMenu);
+  on('#change-name-form', async () => {
+    let name;
+    try { name = normalizeParticipantName($('#participant-name').value); }
+    catch (error) { notice(error.message); return; }
+    $('#participant-name').value = name;
+    profile = await changeParticipantName(db, profile, name);
     prepared = null;
-    $('#participant-label').textContent = `参加者 ${code}`;
-    await showMenu();
+    await resumeParticipant();
   }, 'submit');
 }
 
@@ -529,7 +537,7 @@ async function finishBlock(partial = false) {
   session.app_version = APP_VERSION;
   if (session.log.filter(entry => entry.event === 'app_version').at(-1)?.item_id !== APP_VERSION) log('app_version', APP_VERSION);
   session.face_check = face ? (face.status === 'available' ? 'available' : 'unavailable') : (session.face_check || 'unavailable');
-  setScreen('finished', `<p class="step">${session.block} / ${Object.keys(session.saved).length}問 保存済み${partial ? '（途中まで）' : ''}</p><h1>おつかれさまでした。<br>${GOOGLE_FORM_URL ? (partial ? 'ここまでの分を送りましょう。' : 'このブロックを送りましょう。') : '録った動画を保存しましょう。'}</h1><div class="zip-summary"><h2>1. ZIPファイルを保存</h2><p id="zip-name">ファイルを準備しています…</p><p id="zip-size"></p><button id="download" class="primary" disabled>ZIPを保存する</button><button id="download-fallback" hidden>ダウンロードで保存する</button><p class="small">iPhoneでは共有画面の「ファイルに保存」を選びます。共有できない場合はダウンロードで保存してください。</p></div>${GOOGLE_FORM_URL ? `<h2>2. Googleフォームで送信</h2><p>保存した ZIP を添付して送信してください（Google へのログインが必要です）</p><p>Googleフォームにアカウントの名前・メールアドレス・写真が記録されます。参加者番号を確認して送信してください。</p><a id="open-form" class="button primary" href="${escapeHtml(participantFormUrl(profile.participant.code))}" target="_blank" rel="noopener noreferrer">Googleフォームを開く</a><p>送信できたら、ブロック一覧で「送信済み」にチェックを付けてください。</p>` : '<h2>2. 実験者に連絡</h2><p>送り先はまだ設定されていません。ZIPを保存して実験者に連絡してください。</p><button id="open-form" disabled>Googleフォームを開く（未設定）</button>'}<div class="actions">${partial ? '' : '<button id="redo-last">最後の1問をやり直す</button>'}<button id="back-menu">ブロック一覧へ</button></div>`);
+  setScreen('finished', `<p class="step">${session.block} / ${Object.keys(session.saved).length}問 保存済み${partial ? '（途中まで）' : ''}</p><h1>おつかれさまでした。<br>${GOOGLE_FORM_URL ? (partial ? 'ここまでの分を送りましょう。' : 'このブロックを送りましょう。') : '録った動画を保存しましょう。'}</h1><div class="zip-summary"><h2>1. ZIPファイルを保存</h2><p id="zip-name">ファイルを準備しています…</p><p id="zip-size"></p><button id="download" class="primary" disabled>ZIPを保存する</button><button id="download-fallback" hidden>ダウンロードで保存する</button><p class="small">iPhoneでは共有画面の「ファイルに保存」を選びます。共有できない場合はダウンロードで保存してください。</p></div>${GOOGLE_FORM_URL ? `<h2>2. Googleフォームで送信</h2><p>保存した ZIP を添付して送信してください（Google へのログインが必要です）</p><p>Googleフォームにアカウントの名前・メールアドレス・写真が記録されます。お名前を確認して送信してください。</p><a id="open-form" class="button primary" href="${escapeHtml(participantFormUrl(profile.participant.name))}" target="_blank" rel="noopener noreferrer">Googleフォームを開く</a><p>送信できたら、ブロック一覧で「送信済み」にチェックを付けてください。</p>` : '<h2>2. 実験者に連絡</h2><p>送り先はまだ設定されていません。ZIPを保存して実験者に連絡してください。</p><button id="open-form" disabled>Googleフォームを開く（未設定）</button>'}<div class="actions">${partial ? '' : '<button id="redo-last">最後の1問をやり直す</button>'}<button id="back-menu">ブロック一覧へ</button></div>`);
   on('#back-menu', showMenu);
   on('#redo-last', redoLast);
   on('#download', async () => {
@@ -579,9 +587,7 @@ async function initialize() {
     db = await Database.open();
     profile = await db.get('settings', 'profile');
     if (profile?.participant && (!CONSENT_REQUIRED || (profile.consent_at && profile.consent_version === CONSENT_VERSION))) {
-      $('#participant-label').textContent = `参加者 ${profile.participant.code}`;
-      if (profile.tutorial_completed) await showMenu();
-      else await showCamera();
+      await resumeParticipant();
     } else showConsent();
   } catch (error) {
     setScreen('error', '<h1>このブラウザに保存できません</h1><p>通常のブラウザ画面で開き、端末の空き容量を確認してください。プライベートブラウズでは保存が制限されることがあります。</p>');

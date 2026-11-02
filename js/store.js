@@ -1,4 +1,4 @@
-import { SESSION_PRESET } from '../config.js';
+import { SESSION_PRESET, normalizeParticipantName } from '../config.js';
 
 export function nextUnrecorded(items, saved = {}) {
   const index = items.findIndex(item => !Object.hasOwn(saved, item.item_id));
@@ -87,6 +87,34 @@ function clearSent(session) {
     session.log.push({ event: 'sent_mark_cleared', item_id: '', epoch_ms: epoch, rel_sec: (epoch - session.started_at) / 1000 });
   }
   session.sent = false;
+}
+
+// お名前の訂正は同じ参加者にだけ反映し、動画のキーと内容は変えない。
+export function changeParticipantName(db, profile, value) {
+  const name = normalizeParticipantName(value);
+  const nextProfile = structuredClone(profile);
+  nextProfile.participant.name = name;
+  if (profile.participant.name === name) return Promise.resolve(nextProfile);
+  return new Promise((resolve, reject) => {
+    const transaction = db.db.transaction(['settings', 'sessions'], 'readwrite');
+    const sessions = transaction.objectStore('sessions');
+    const request = sessions.getAll();
+    transaction.oncomplete = () => resolve(nextProfile);
+    transaction.onabort = () => reject(new Error('お名前を保存できませんでした。名前と保存済みの動画は変更していません。もう一度試してください。'));
+    transaction.onerror = () => {};
+    request.onsuccess = () => {
+      for (const original of request.result.filter(value => value.participant.code === profile.participant.code)) {
+        const updated = structuredClone(original);
+        updated.participant.name = name;
+        clearSent(updated);
+        updated.zip_saved_at = null;
+        const epoch = Date.now();
+        updated.log.push({ event: 'participant_name_changed', item_id: '', epoch_ms: epoch, rel_sec: (epoch - updated.started_at) / 1000 });
+        sessions.put(updated, updated.key);
+      }
+      transaction.objectStore('settings').put(nextProfile, 'profile');
+    };
+  });
 }
 
 // 全プリセットの動画・進捗・番号を一つのトランザクション内で付け替える。
