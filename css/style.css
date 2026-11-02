@@ -45,20 +45,26 @@ p { line-height:1.85; margin:12px 0; }
 .block-controls { display:grid; gap:8px; align-content:center; }
 .block-controls .check { padding:0; font-size:16px; }
 progress { width:100%; height:12px; accent-color:var(--blue); }
-.record-top { display:flex; justify-content:space-between; gap:15px; align-items:flex-start; min-height:110px; }
-.record-top h1 { font-size:24px; }
-.corner { width:150px; flex:0 0 150px; }
-.corner video { width:100%; border-radius:5px; background:#101b23; }
-.corner button { min-height:36px; padding:5px 8px; font-size:13px; width:100%; }
+.record-top { display:flex; justify-content:space-between; gap:15px; align-items:flex-start; margin-bottom:22px; }
+.record-top h1 { font-size:24px; margin-bottom:0; }
+.record-workspace { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:32px; align-items:center; }
+.record-preview { min-width:0; }
+.record-preview video { width:100%; height:auto; display:block; background:#101b23; }
+.record-preview .preview-stage { width:min(100%,calc(38vh * var(--video-ratio,1.777778))); margin:auto; border-radius:10px; overflow:hidden; }
+.preview-heading { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; font-size:15px; font-weight:700; }
+.preview-heading button { min-height:36px; padding:5px 10px; font-size:13px; white-space:nowrap; }
+.record-preview .face-status { min-height:0; margin:10px 0 0; }
+.record-prompt { min-width:0; }
 .counter { font-size:21px; font-weight:700; }
-.item { font-size:clamp(48px,4.6vw,68px); font-weight:700; line-height:1.55; text-align:center; margin:24px auto 8px; overflow-wrap:normal; }
+.item { font-size:clamp(36px,3.5vw,48px); font-weight:700; line-height:1.55; text-align:center; margin:24px auto 8px; overflow-wrap:normal; }
 .reading { font-size:clamp(20px,2vw,28px); text-align:center; line-height:1.7; margin:0 0 20px; overflow-wrap:normal; }
 .reminder { text-align:center; font-size:19px; border-top:1px solid var(--line); padding-top:18px; }
 .rec-status { text-align:center; font-size:22px; font-weight:700; padding:12px; }
 .rec-status[data-state=recording] { color:var(--danger); background:#fff0f0; }
 .rec-status[data-state=recording]::before { content:'● '; }
-.record-actions { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.record-actions { display:grid; grid-template-columns:1fr; gap:0; }
 .record-actions button { min-height:66px; font-size:23px; }
+.record-actions p { margin:5px 0 0; text-align:center; font-size:13px; line-height:1.5; }
 .secondary-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
 .secondary-actions button { font-size:17px; padding:12px 16px; }
 .key { font-size:12px; font-weight:400; }
@@ -81,9 +87,14 @@ footer span { margin-left:12px; }
   .block-title h2 { font-size:20px; }
   .item { font-size:clamp(34px,9vw,48px); margin-top:22px; }
   .reading { font-size:20px; }
-  .record-top { min-height:85px; }
+  .record-top { margin-bottom:12px; }
   .record-top h1 { font-size:20px; }
-  .corner { width:100px; flex-basis:100px; }
+  .record-workspace { grid-template-columns:1fr; gap:14px; }
+  .record-preview .preview-stage { width:min(100%,calc(27svh * var(--video-ratio,1.777778))); }
+  .preview-heading { font-size:13px; margin-bottom:8px; }
+  .record-preview .face-status { font-size:14px; padding:7px 10px; }
+  .record-prompt .item { margin:0 0 6px; }
+  .record-prompt .reading { margin-bottom:8px; }
   .reminder { font-size:15px; }
   .record-actions button { font-size:21px; padding:12px; flex-wrap:wrap; }
   .secondary-actions button { flex:1 1 140px; font-size:16px; }
@@ -96,7 +107,7 @@ body { line-break:strict; word-break:normal; }
 @supports (word-break:auto-phrase) { body { word-break:auto-phrase; } }
 h1,h2,button,.button { text-wrap:balance; }
 .notice { position:fixed; top:8px; left:50%; transform:translateX(-50%); width:calc(100% - 24px); max-width:850px; z-index:20; box-shadow:0 4px 16px #15364d33; max-height:30vh; overflow:auto; }
-.camera-stage video,.corner video { transform:scaleX(-1); }
+.camera-stage video,.record-preview video { transform:scaleX(-1); }
 .camera-stage { width:min(100%,640px,calc(34vh * var(--video-ratio,1.777778))); margin-top:12px; }
 .camera-stage video { max-height:34vh; }
 .preview-stage { position:relative; line-height:0; }
@@ -108,7 +119,9 @@ h1,h2,button,.button { text-wrap:balance; }
 [data-screen=camera] .field { margin-top:8px !important; gap:4px; }
 [data-screen=camera] .actions { margin-top:10px; }
 [data-screen=camera] .face-status { min-height:0; }
-.record-actions { position:sticky; bottom:8px; z-index:5; background:white; padding:8px 0; }
+.record-actions { position:fixed; left:50%; bottom:12px; transform:translateX(-50%); width:min(620px,calc(100% - 32px)); z-index:5; background:white; padding:10px 12px 8px; border:1px solid var(--line); border-radius:12px; box-shadow:0 3px 20px #15364d26; }
+body:has([data-screen=recording]),body:has([data-screen=practice]) { padding-bottom:180px; }
+[data-screen=recording],[data-screen=practice] { min-height:0; }
 .browser-banner { margin:12px auto; padding:12px; max-width:1100px; background:#fff2cf; line-height:1.7; }
 .browser-banner button { margin:8px; }
 @media (pointer:coarse) { .key { display:none; } }
@@ -121,16 +134,30 @@ h1,h2,button,.button { text-wrap:balance; }
 @media (max-height:500px) and (orientation:landscape) {
   .site-header { padding:6px 14px; }
   main { margin:6px 8px; padding:10px 16px; }
-  [data-screen=recording],[data-screen=practice] { padding-right:230px; }
-  .record-top { min-height:55px; }
+  .record-top { margin-bottom:8px; }
   .record-top h1 { font-size:18px; margin-bottom:4px; }
   .record-top .step { margin-bottom:2px; }
-  .corner { width:90px; flex-basis:90px; }
+  .record-workspace { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; }
+  .record-preview .preview-stage { width:min(100%,calc(38vh * var(--video-ratio,1.777778))); }
+  .preview-heading { margin-bottom:4px; }
+  .preview-heading span { display:none; }
   .item { font-size:clamp(26px,7vh,36px); margin:8px 0; min-height:0; }
   .reading,.reminder { margin:4px 0; font-size:14px; }
   .rec-status { margin:4px 0; padding:6px; }
-  .record-actions { position:fixed; right:16px; bottom:12px; width:200px; grid-template-columns:1fr; padding:8px; border-radius:8px; }
-  .record-actions button { min-height:58px; }
+  .record-actions { bottom:6px; width:min(420px,calc(100% - 32px)); padding:6px 8px; }
+  .record-actions button { min-height:52px; padding:8px; }
+  .record-actions p { display:none; }
   .secondary-actions { margin-top:6px; }
   .secondary-actions button { padding:6px; min-height:40px; font-size:14px; }
+}
+
+/* 主操作の座標を、項目の長さや録画状態によらず固定する。 */
+.record-actions .secondary-actions { margin-top:8px; gap:6px; }
+.record-actions .secondary-actions button { flex:1 1 0; min-width:0; min-height:38px; padding:6px 8px; font-size:14px; }
+.record-actions .secondary-actions .key { display:none; }
+@media (max-width:600px) {
+  .record-top .step { margin-bottom:4px; }
+  .record-prompt .reminder { margin:6px 0; padding-top:10px; line-height:1.6; }
+  .record-prompt .rec-status { padding:8px; font-size:20px; }
+  .record-actions .secondary-actions button { font-size:13px; padding:6px 4px; }
 }

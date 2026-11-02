@@ -1,5 +1,5 @@
 // 同意画面が必要になった場合は文面と版を見直し、設定を変更する。
-export const APP_VERSION = '1.1.2';
+export const APP_VERSION = '1.1.3';
 export const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSccnkhrIjERHGRSCFqfz2LueMHRmPxUHBnnS-Av1aWTHa4uag/viewform';
 export const GOOGLE_FORM_PARTICIPANT_ENTRY = 'entry.920564838';
 export const CONSENT_REQUIRED = false;
@@ -12,7 +12,7 @@ export const FACE = {
   modelUrl: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
   timeoutMs: 10000,
   // 枠は映像全体に対する比率。CSSのガイドにも同じ値を使う。
-  guide: { left: 0.20, right: 0.80, top: 0.42, bottom: 0.85 },
+  guide: { left: 0.35, right: 0.65, top: 0.56, bottom: 0.74 },
   minMouthWidth: 0.08,
   minLuma: 60,
 };

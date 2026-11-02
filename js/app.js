@@ -65,7 +65,10 @@ function syncControls() {
     }
   }
   if (['recording', 'practice'].includes(screen.dataset.screen)) {
-    $('#record').disabled = busy || Boolean(capture) || Boolean(pendingTake);
+    const hasTake = Boolean(capture || pendingTake);
+    $('#record').hidden = hasTake;
+    $('#next').hidden = !hasTake;
+    $('#record').disabled = busy || hasTake;
     $('#next').disabled = busy || (!capture && !pendingTake);
     $('#redo').disabled = busy;
     $('#redo-prev').disabled = busy || index === 0;
@@ -195,7 +198,7 @@ function showTutorial(page) {
   tutorialPage = page;
   const pages = [
     ['声を出さずに、口だけ動かす', '画面の言葉を、声を出さずにはっきり口で伝えてください。始めと終わりに口を閉じて1秒ずつ待ちます。', ['口を閉じて1秒', '口だけ動かす', '口を閉じて1秒']],
-    ['「録画」から「次へ」までが1問', '「録画」を押してから始めます。最後の1秒まで待って「次へ」を押すと、その動画を保存して次の言葉が出ます。目安は1問2〜6秒です。', ['録画を押す', '口を動かす', '次へを押す']],
+    ['同じ場所のボタンで、1問ずつ録る', '画面下の「録画」を押すと、同じ場所が「次へ」に変わります。最後の1秒まで待って押すと、その動画を保存して次の言葉が出ます。マウスを動かさず、同じ場所を押して続けられます。目安は1問2〜6秒です。', ['録画を押す', '口を動かす', '次へを押す']],
     ['間違えても、録り直せます', '「やり直し」は今の1問を最初から。「1つ前をやり直す」は前の1問へ戻ります。どちらも押すとすぐ録画が始まります。「中断」で休めます。', ['今の1問をやり直す', '1つ前をやり直す']],
   ];
   const [title, text, steps] = pages[page];
@@ -321,7 +324,7 @@ async function showItem() {
   }
   const item = items[index];
   log('show');
-  setScreen(practice ? 'practice' : 'recording', `<div class="record-top"><div><p class="step">${practice ? '練習・保存しません' : escapeHtml((session.blocks || []).find(block => block.id === session.block)?.title || BLOCKS.find(block => block.id === session.block)?.title || '口の動きの録画')}</p><h1>${practice ? 'まずは気軽に練習' : '声を出さずに、口だけで'}</h1><span id="counter" class="counter">${index + 1} / ${items.length}</span></div><div class="corner"><div class="preview-stage" ${previewVisible ? '' : 'hidden'}><video id="preview" autoplay muted playsinline ${previewVisible ? '' : 'hidden'}></video><div class="guide" aria-label="口を入れる枠"></div></div><button id="toggle-preview" aria-pressed="${previewVisible}">${previewVisible ? '小窓を隠す' : '小窓を表示'}</button></div></div><div class="item" id="item-text">${escapeHtml(item.text)}</div>${item.reading ? `<p class="reading">${escapeHtml(item.reading)}</p>` : ''}<p class="reminder">口を閉じて1秒 → 口だけ動かす → 口を閉じて1秒</p><div class="rec-status" id="record-state" role="status" data-state="idle">録画待ち <span id="elapsed">0.0秒</span></div><div class="record-actions"><button id="record" class="primary">録画 <span class="key">Space</span></button><button id="next" class="primary" disabled>次へ <span class="key">Space / →</span></button></div><div class="secondary-actions"><button id="redo">やり直し <span class="key">R</span></button><button id="redo-prev" ${index === 0 ? 'disabled' : ''}>1つ前をやり直す <span class="key">Backspace</span></button><button id="interrupt">中断</button></div><p id="face-status" class="face-status" role="status"></p><p class="small">目安は2〜6秒。2秒より短いときは一度お知らせします。12秒になる前に自動停止します。中断すると、録画中の1問は保存しません。</p>`);
+  setScreen(practice ? 'practice' : 'recording', `<div class="record-top"><div><p class="step">${practice ? '練習・保存しません' : escapeHtml((session.blocks || []).find(block => block.id === session.block)?.title || BLOCKS.find(block => block.id === session.block)?.title || '口の動きの録画')}</p><h1>${practice ? 'まずは気軽に練習' : '声を出さずに、口だけで'}</h1></div><span id="counter" class="counter">${index + 1} / ${items.length}</span></div><div class="record-workspace"><div class="record-preview"><div class="preview-heading"><span>口元を見ながら録れます</span><button id="toggle-preview" aria-pressed="${previewVisible}">${previewVisible ? '映像を隠す' : '映像を表示'}</button></div><div class="preview-stage" ${previewVisible ? '' : 'hidden'}><video id="preview" autoplay muted playsinline ${previewVisible ? '' : 'hidden'}></video><div class="guide" aria-label="口を入れる枠"></div></div><p id="face-status" class="face-status" role="status"></p></div><div class="record-prompt"><div class="item" id="item-text">${escapeHtml(item.text)}</div>${item.reading ? `<p class="reading">${escapeHtml(item.reading)}</p>` : ''}<p class="reminder">口を閉じて1秒 → 口だけ動かす → 口を閉じて1秒</p><div class="rec-status" id="record-state" role="status" data-state="idle">録画待ち <span id="elapsed">0.0秒</span></div></div></div><div class="record-actions"><button id="record" class="primary">録画 <span class="key">Space</span></button><button id="next" class="primary" hidden disabled>次へ <span class="key">Space / →</span></button><p>同じ場所をクリックして進めます</p><div class="secondary-actions"><button id="redo">やり直し <span class="key">R</span></button><button id="redo-prev" ${index === 0 ? 'disabled' : ''}>1つ前をやり直す <span class="key">Backspace</span></button><button id="interrupt">中断</button></div></div><p class="small recording-help">目安は2〜6秒。2秒より短いときは一度お知らせします。12秒になる前に自動停止します。中断すると、録画中の1問は保存しません。</p>`);
   positionGuides();
   const round = Number(item.item_id.match(/_r(\d+)$/)?.[1]);
   const previousRound = Number(items[index - 1]?.item_id.match(/_r(\d+)$/)?.[1]);
@@ -340,11 +343,13 @@ async function showItem() {
     previewVisible = !previewVisible;
     $('#preview').hidden = !previewVisible;
     $('.preview-stage').hidden = !previewVisible;
-    $('#toggle-preview').textContent = previewVisible ? '小窓を隠す' : '小窓を表示';
+    $('#toggle-preview').textContent = previewVisible ? '映像を隠す' : '映像を表示';
     $('#toggle-preview').setAttribute('aria-pressed', String(previewVisible));
   });
   // 映像の準備に失敗しても、中断してカメラを確認する操作は残す。
   await attachVideo($('#preview'), stream);
+  const video = $('#preview');
+  $('.preview-stage').style.setProperty('--video-ratio', video.videoWidth / video.videoHeight);
   updateFace();
 }
 
