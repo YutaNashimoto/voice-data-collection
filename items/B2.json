@@ -1,0 +1,522 @@
+[
+  {
+    "item_id": "atr_103_r1",
+    "text": "それぞれ",
+    "reading": "それぞれ"
+  },
+  {
+    "item_id": "atr_097_r1",
+    "text": "正札",
+    "reading": "しょうふだ"
+  },
+  {
+    "item_id": "atr_022_r1",
+    "text": "眼鏡",
+    "reading": "めがね"
+  },
+  {
+    "item_id": "atr_007_r1",
+    "text": "十一月",
+    "reading": "じゅういちがつ"
+  },
+  {
+    "item_id": "atr_013_r1",
+    "text": "ちゃんと",
+    "reading": "ちゃんと"
+  },
+  {
+    "item_id": "atr_006_r1",
+    "text": "材料",
+    "reading": "ざいりょう"
+  },
+  {
+    "item_id": "atr_186_r1",
+    "text": "ミュージック",
+    "reading": "みゅーじっく"
+  },
+  {
+    "item_id": "atr_107_r1",
+    "text": "駐車",
+    "reading": "ちゅうしゃ"
+  },
+  {
+    "item_id": "atr_074_r1",
+    "text": "休業",
+    "reading": "きゅうぎょう"
+  },
+  {
+    "item_id": "atr_033_r1",
+    "text": "でしゃばる",
+    "reading": "でしゃばる"
+  },
+  {
+    "item_id": "atr_216_r1",
+    "text": "隠れピューリタン",
+    "reading": "かくれぴゅーりたん"
+  },
+  {
+    "item_id": "atr_111_r1",
+    "text": "手拭",
+    "reading": "てぬぐい"
+  },
+  {
+    "item_id": "atr_019_r1",
+    "text": "文明",
+    "reading": "ぶんめい"
+  },
+  {
+    "item_id": "atr_173_r1",
+    "text": "下流",
+    "reading": "かりゅう"
+  },
+  {
+    "item_id": "atr_136_r1",
+    "text": "ページ",
+    "reading": "ぺーじ"
+  },
+  {
+    "item_id": "atr_092_r1",
+    "text": "周辺",
+    "reading": "しゅうへん"
+  },
+  {
+    "item_id": "atr_203_r1",
+    "text": "微妙",
+    "reading": "びみょう"
+  },
+  {
+    "item_id": "atr_151_r1",
+    "text": "横綱",
+    "reading": "よこづな"
+  },
+  {
+    "item_id": "atr_047_r1",
+    "text": "アルミニウム",
+    "reading": "あるみにうむ"
+  },
+  {
+    "item_id": "atr_093_r1",
+    "text": "出世",
+    "reading": "しゅっせ"
+  },
+  {
+    "item_id": "atr_190_r1",
+    "text": "八百",
+    "reading": "はっぴゃく"
+  },
+  {
+    "item_id": "atr_090_r1",
+    "text": "先程",
+    "reading": "さきほど"
+  },
+  {
+    "item_id": "atr_084_r1",
+    "text": "小切手",
+    "reading": "こぎって"
+  },
+  {
+    "item_id": "atr_088_r1",
+    "text": "コピー",
+    "reading": "こぴー"
+  },
+  {
+    "item_id": "atr_052_r1",
+    "text": "今頃",
+    "reading": "いまごろ"
+  },
+  {
+    "item_id": "atr_212_r1",
+    "text": "ひゅーひゅー",
+    "reading": "ひゅーひゅー"
+  },
+  {
+    "item_id": "atr_179_r1",
+    "text": "反逆",
+    "reading": "はんぎゃく"
+  },
+  {
+    "item_id": "atr_069_r1",
+    "text": "思わず",
+    "reading": "おもわず"
+  },
+  {
+    "item_id": "atr_082_r1",
+    "text": "下品",
+    "reading": "げひん"
+  },
+  {
+    "item_id": "atr_197_r1",
+    "text": "誤謬",
+    "reading": "ごびゅう"
+  },
+  {
+    "item_id": "atr_091_r1",
+    "text": "ジグザグ",
+    "reading": "じぐざぐ"
+  },
+  {
+    "item_id": "atr_003_r1",
+    "text": "羨ましい",
+    "reading": "うらやましい"
+  },
+  {
+    "item_id": "atr_124_r1",
+    "text": "パイプ",
+    "reading": "ぱいぷ"
+  },
+  {
+    "item_id": "atr_036_r1",
+    "text": "百姓",
+    "reading": "ひゃくしょう"
+  },
+  {
+    "item_id": "atr_010_r1",
+    "text": "垂直",
+    "reading": "すいちょく"
+  },
+  {
+    "item_id": "atr_076_r1",
+    "text": "牛乳",
+    "reading": "ぎゅうにゅう"
+  },
+  {
+    "item_id": "atr_142_r1",
+    "text": "脈",
+    "reading": "みゃく"
+  },
+  {
+    "item_id": "atr_059_r1",
+    "text": "英雄",
+    "reading": "えいゆう"
+  },
+  {
+    "item_id": "atr_120_r1",
+    "text": "女房",
+    "reading": "にょうぼう"
+  },
+  {
+    "item_id": "atr_137_r1",
+    "text": "ベッド",
+    "reading": "べっど"
+  },
+  {
+    "item_id": "atr_020_r1",
+    "text": "ポケット",
+    "reading": "ぽけっと"
+  },
+  {
+    "item_id": "atr_040_r1",
+    "text": "レジャー",
+    "reading": "れじゃー"
+  },
+  {
+    "item_id": "atr_098_r1",
+    "text": "省略",
+    "reading": "しょうりゃく"
+  },
+  {
+    "item_id": "atr_081_r1",
+    "text": "拒絶",
+    "reading": "きょぜつ"
+  },
+  {
+    "item_id": "atr_210_r1",
+    "text": "啓白",
+    "reading": "けいびゃく"
+  },
+  {
+    "item_id": "atr_096_r1",
+    "text": "乗客",
+    "reading": "じょうきゃく"
+  },
+  {
+    "item_id": "atr_182_r1",
+    "text": "こんにゃく",
+    "reading": "こんにゃく"
+  },
+  {
+    "item_id": "atr_181_r1",
+    "text": "座標",
+    "reading": "ざひょう"
+  },
+  {
+    "item_id": "atr_112_r1",
+    "text": "手のひら",
+    "reading": "てのひら"
+  },
+  {
+    "item_id": "atr_130_r1",
+    "text": "描写",
+    "reading": "びょうしゃ"
+  },
+  {
+    "item_id": "atr_193_r1",
+    "text": "干瓢",
+    "reading": "かんぴょう"
+  },
+  {
+    "item_id": "atr_029_r1",
+    "text": "そびえる",
+    "reading": "そびえる"
+  },
+  {
+    "item_id": "atr_082_r2",
+    "text": "下品",
+    "reading": "げひん"
+  },
+  {
+    "item_id": "atr_074_r2",
+    "text": "休業",
+    "reading": "きゅうぎょう"
+  },
+  {
+    "item_id": "atr_212_r2",
+    "text": "ひゅーひゅー",
+    "reading": "ひゅーひゅー"
+  },
+  {
+    "item_id": "atr_047_r2",
+    "text": "アルミニウム",
+    "reading": "あるみにうむ"
+  },
+  {
+    "item_id": "atr_052_r2",
+    "text": "今頃",
+    "reading": "いまごろ"
+  },
+  {
+    "item_id": "atr_069_r2",
+    "text": "思わず",
+    "reading": "おもわず"
+  },
+  {
+    "item_id": "atr_033_r2",
+    "text": "でしゃばる",
+    "reading": "でしゃばる"
+  },
+  {
+    "item_id": "atr_096_r2",
+    "text": "乗客",
+    "reading": "じょうきゃく"
+  },
+  {
+    "item_id": "atr_010_r2",
+    "text": "垂直",
+    "reading": "すいちょく"
+  },
+  {
+    "item_id": "atr_124_r2",
+    "text": "パイプ",
+    "reading": "ぱいぷ"
+  },
+  {
+    "item_id": "atr_097_r2",
+    "text": "正札",
+    "reading": "しょうふだ"
+  },
+  {
+    "item_id": "atr_193_r2",
+    "text": "干瓢",
+    "reading": "かんぴょう"
+  },
+  {
+    "item_id": "atr_084_r2",
+    "text": "小切手",
+    "reading": "こぎって"
+  },
+  {
+    "item_id": "atr_103_r2",
+    "text": "それぞれ",
+    "reading": "それぞれ"
+  },
+  {
+    "item_id": "atr_020_r2",
+    "text": "ポケット",
+    "reading": "ぽけっと"
+  },
+  {
+    "item_id": "atr_151_r2",
+    "text": "横綱",
+    "reading": "よこづな"
+  },
+  {
+    "item_id": "atr_190_r2",
+    "text": "八百",
+    "reading": "はっぴゃく"
+  },
+  {
+    "item_id": "atr_007_r2",
+    "text": "十一月",
+    "reading": "じゅういちがつ"
+  },
+  {
+    "item_id": "atr_216_r2",
+    "text": "隠れピューリタン",
+    "reading": "かくれぴゅーりたん"
+  },
+  {
+    "item_id": "atr_091_r2",
+    "text": "ジグザグ",
+    "reading": "じぐざぐ"
+  },
+  {
+    "item_id": "atr_136_r2",
+    "text": "ページ",
+    "reading": "ぺーじ"
+  },
+  {
+    "item_id": "atr_210_r2",
+    "text": "啓白",
+    "reading": "けいびゃく"
+  },
+  {
+    "item_id": "atr_003_r2",
+    "text": "羨ましい",
+    "reading": "うらやましい"
+  },
+  {
+    "item_id": "atr_090_r2",
+    "text": "先程",
+    "reading": "さきほど"
+  },
+  {
+    "item_id": "atr_013_r2",
+    "text": "ちゃんと",
+    "reading": "ちゃんと"
+  },
+  {
+    "item_id": "atr_081_r2",
+    "text": "拒絶",
+    "reading": "きょぜつ"
+  },
+  {
+    "item_id": "atr_092_r2",
+    "text": "周辺",
+    "reading": "しゅうへん"
+  },
+  {
+    "item_id": "atr_059_r2",
+    "text": "英雄",
+    "reading": "えいゆう"
+  },
+  {
+    "item_id": "atr_036_r2",
+    "text": "百姓",
+    "reading": "ひゃくしょう"
+  },
+  {
+    "item_id": "atr_029_r2",
+    "text": "そびえる",
+    "reading": "そびえる"
+  },
+  {
+    "item_id": "atr_197_r2",
+    "text": "誤謬",
+    "reading": "ごびゅう"
+  },
+  {
+    "item_id": "atr_173_r2",
+    "text": "下流",
+    "reading": "かりゅう"
+  },
+  {
+    "item_id": "atr_142_r2",
+    "text": "脈",
+    "reading": "みゃく"
+  },
+  {
+    "item_id": "atr_019_r2",
+    "text": "文明",
+    "reading": "ぶんめい"
+  },
+  {
+    "item_id": "atr_093_r2",
+    "text": "出世",
+    "reading": "しゅっせ"
+  },
+  {
+    "item_id": "atr_112_r2",
+    "text": "手のひら",
+    "reading": "てのひら"
+  },
+  {
+    "item_id": "atr_107_r2",
+    "text": "駐車",
+    "reading": "ちゅうしゃ"
+  },
+  {
+    "item_id": "atr_203_r2",
+    "text": "微妙",
+    "reading": "びみょう"
+  },
+  {
+    "item_id": "atr_137_r2",
+    "text": "ベッド",
+    "reading": "べっど"
+  },
+  {
+    "item_id": "atr_088_r2",
+    "text": "コピー",
+    "reading": "こぴー"
+  },
+  {
+    "item_id": "atr_179_r2",
+    "text": "反逆",
+    "reading": "はんぎゃく"
+  },
+  {
+    "item_id": "atr_130_r2",
+    "text": "描写",
+    "reading": "びょうしゃ"
+  },
+  {
+    "item_id": "atr_182_r2",
+    "text": "こんにゃく",
+    "reading": "こんにゃく"
+  },
+  {
+    "item_id": "atr_186_r2",
+    "text": "ミュージック",
+    "reading": "みゅーじっく"
+  },
+  {
+    "item_id": "atr_120_r2",
+    "text": "女房",
+    "reading": "にょうぼう"
+  },
+  {
+    "item_id": "atr_111_r2",
+    "text": "手拭",
+    "reading": "てぬぐい"
+  },
+  {
+    "item_id": "atr_022_r2",
+    "text": "眼鏡",
+    "reading": "めがね"
+  },
+  {
+    "item_id": "atr_181_r2",
+    "text": "座標",
+    "reading": "ざひょう"
+  },
+  {
+    "item_id": "atr_040_r2",
+    "text": "レジャー",
+    "reading": "れじゃー"
+  },
+  {
+    "item_id": "atr_098_r2",
+    "text": "省略",
+    "reading": "しょうりゃく"
+  },
+  {
+    "item_id": "atr_006_r2",
+    "text": "材料",
+    "reading": "ざいりょう"
+  },
+  {
+    "item_id": "atr_076_r2",
+    "text": "牛乳",
+    "reading": "ぎゅうにゅう"
+  }
+]

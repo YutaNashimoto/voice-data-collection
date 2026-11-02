@@ -1,0 +1,302 @@
+[
+  {
+    "item_id": "p11_r1",
+    "text": "窓を開けてください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p06_r1",
+    "text": "もう一度言います。",
+    "reading": ""
+  },
+  {
+    "item_id": "p19_r1",
+    "text": "はい、わかりました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p15_r1",
+    "text": "ご飯を食べました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p07_r1",
+    "text": "ゆっくり話します。",
+    "reading": ""
+  },
+  {
+    "item_id": "p13_r1",
+    "text": "家族に連絡したいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p01_r1",
+    "text": "水をください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p20_r1",
+    "text": "いいえ、違います。",
+    "reading": ""
+  },
+  {
+    "item_id": "p04_r1",
+    "text": "痛みがあります。",
+    "reading": ""
+  },
+  {
+    "item_id": "p09_r1",
+    "text": "今日は体調がいいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p16_r1",
+    "text": "散歩に行きます。",
+    "reading": ""
+  },
+  {
+    "item_id": "p12_r1",
+    "text": "寒いので毛布をください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p02_r1",
+    "text": "トイレに行きたいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p03_r1",
+    "text": "少し待ってください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p08_r1",
+    "text": "薬を飲みました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p10_r1",
+    "text": "夜はよく眠れました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p14_r1",
+    "text": "明日の予定を教えてください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p17_r1",
+    "text": "手伝ってもらえますか。",
+    "reading": ""
+  },
+  {
+    "item_id": "p18_r1",
+    "text": "ありがとう、助かりました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p05_r1",
+    "text": "大丈夫です。",
+    "reading": ""
+  },
+  {
+    "item_id": "p18_r2",
+    "text": "ありがとう、助かりました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p19_r2",
+    "text": "はい、わかりました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p03_r2",
+    "text": "少し待ってください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p07_r2",
+    "text": "ゆっくり話します。",
+    "reading": ""
+  },
+  {
+    "item_id": "p16_r2",
+    "text": "散歩に行きます。",
+    "reading": ""
+  },
+  {
+    "item_id": "p02_r2",
+    "text": "トイレに行きたいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p05_r2",
+    "text": "大丈夫です。",
+    "reading": ""
+  },
+  {
+    "item_id": "p17_r2",
+    "text": "手伝ってもらえますか。",
+    "reading": ""
+  },
+  {
+    "item_id": "p10_r2",
+    "text": "夜はよく眠れました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p11_r2",
+    "text": "窓を開けてください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p12_r2",
+    "text": "寒いので毛布をください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p14_r2",
+    "text": "明日の予定を教えてください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p20_r2",
+    "text": "いいえ、違います。",
+    "reading": ""
+  },
+  {
+    "item_id": "p13_r2",
+    "text": "家族に連絡したいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p08_r2",
+    "text": "薬を飲みました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p04_r2",
+    "text": "痛みがあります。",
+    "reading": ""
+  },
+  {
+    "item_id": "p06_r2",
+    "text": "もう一度言います。",
+    "reading": ""
+  },
+  {
+    "item_id": "p15_r2",
+    "text": "ご飯を食べました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p01_r2",
+    "text": "水をください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p09_r2",
+    "text": "今日は体調がいいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p06_r3",
+    "text": "もう一度言います。",
+    "reading": ""
+  },
+  {
+    "item_id": "p17_r3",
+    "text": "手伝ってもらえますか。",
+    "reading": ""
+  },
+  {
+    "item_id": "p09_r3",
+    "text": "今日は体調がいいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p12_r3",
+    "text": "寒いので毛布をください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p08_r3",
+    "text": "薬を飲みました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p20_r3",
+    "text": "いいえ、違います。",
+    "reading": ""
+  },
+  {
+    "item_id": "p02_r3",
+    "text": "トイレに行きたいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p13_r3",
+    "text": "家族に連絡したいです。",
+    "reading": ""
+  },
+  {
+    "item_id": "p18_r3",
+    "text": "ありがとう、助かりました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p19_r3",
+    "text": "はい、わかりました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p05_r3",
+    "text": "大丈夫です。",
+    "reading": ""
+  },
+  {
+    "item_id": "p10_r3",
+    "text": "夜はよく眠れました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p01_r3",
+    "text": "水をください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p16_r3",
+    "text": "散歩に行きます。",
+    "reading": ""
+  },
+  {
+    "item_id": "p14_r3",
+    "text": "明日の予定を教えてください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p04_r3",
+    "text": "痛みがあります。",
+    "reading": ""
+  },
+  {
+    "item_id": "p15_r3",
+    "text": "ご飯を食べました。",
+    "reading": ""
+  },
+  {
+    "item_id": "p03_r3",
+    "text": "少し待ってください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p11_r3",
+    "text": "窓を開けてください。",
+    "reading": ""
+  },
+  {
+    "item_id": "p07_r3",
+    "text": "ゆっくり話します。",
+    "reading": ""
+  }
+]
